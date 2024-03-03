@@ -12,10 +12,14 @@ namespace SalesWebMvc.Data
         public SalesWebMvcContext (DbContextOptions<SalesWebMvcContext> options)
             : base(options)
         {
+            SeedingService seedingService = new SeedingService(this);
+            seedingService.Seed();
         }
 
         public DbSet<Department> Department { get; set; } = default!;
         public DbSet<Seller> Sellers { get; set; } = default!;
         public DbSet<SalesRecord> SalesRecords { get; set; }
+
+
     }
 }
