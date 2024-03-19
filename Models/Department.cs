@@ -2,27 +2,27 @@
 {
     public class Department
     {
-        public int id { get; set; }
-        public string name { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
 
-        public ICollection<Seller> sellers { get; set; } = new List<Seller>();
+        public ICollection<Seller> Sellers { get; set; } = new List<Seller>();
 
         public Department() { }
 
         public Department(int id, string name)
         {
-            this.id = id;
-            this.name = name;
+            this.Id = id;
+            this.Name = name;
         }
 
         public void AddSller(Seller seller) 
         {
-            sellers.Add(seller);
+            Sellers.Add(seller);
         }
 
         public double TotalSales(DateTime Initial, DateTime Final)
         {
-            return sellers.Sum(s => s.TotalSales(Initial, Final));
+            return Sellers.Sum(s => s.TotalSales(Initial, Final));
         }
     }
 }

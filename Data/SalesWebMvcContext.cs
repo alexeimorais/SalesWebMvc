@@ -9,6 +9,10 @@ namespace SalesWebMvc.Data
 {
     public class SalesWebMvcContext : DbContext
     {
+        public SalesWebMvcContext()
+        {
+
+        }
         public SalesWebMvcContext (DbContextOptions<SalesWebMvcContext> options)
             : base(options)
         {

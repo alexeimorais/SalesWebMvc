@@ -5,10 +5,10 @@ using SalesWebMvc.Data;
 using SalesWebMvc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-string connectionString = builder.Configuration.GetConnectionString("SalesWebMvcContext");
+
 builder.Services.AddDbContext<SalesWebMvcContext>(options =>
     //options.UseMySql(builder.Configuration.GetConnectionString("SalesWebMvcContext"),  builder => builder.MigrationsAssembly("SalesWebMvc")));
-    options.UseMySql(connectionString, Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(connectionString)));
+    options.UseMySql(builder.Configuration.GetConnectionString("SalesWebMvcContext"), Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("SalesWebMvcContext"))));
 //options.UseSqlServer(builder.Configuration.GetConnectionString("SalesWebMvcContext") ?? throw new InvalidOperationException("Connection string 'SalesWebMvcContext' not found.")));
 
 // Add services to the container.
@@ -16,6 +16,7 @@ builder.Services.AddControllersWithViews();
 
 // Add service
 builder.Services.AddScoped<SellerService>();
+builder.Services.AddScoped<DepartmentService>();
 
 var app = builder.Build();
 

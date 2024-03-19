@@ -7,11 +7,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SalesWebMvc.Migrations
 {
     /// <inheritdoc />
-    public partial class OtherEntities : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Department",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Department", x => x.id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "Sellers",
                 columns: table => new
@@ -24,14 +42,14 @@ namespace SalesWebMvc.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     BirthDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     BaseSalary = table.Column<double>(type: "double", nullable: false),
-                    Departmentid = table.Column<int>(type: "int", nullable: false)
+                    DepartmentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sellers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sellers_Department_Departmentid",
-                        column: x => x.Departmentid,
+                        name: "FK_Sellers_Department_DepartmentId",
+                        column: x => x.DepartmentId,
                         principalTable: "Department",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -67,9 +85,9 @@ namespace SalesWebMvc.Migrations
                 column: "SellerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sellers_Departmentid",
+                name: "IX_Sellers_DepartmentId",
                 table: "Sellers",
-                column: "Departmentid");
+                column: "DepartmentId");
         }
 
         /// <inheritdoc />
@@ -80,6 +98,9 @@ namespace SalesWebMvc.Migrations
 
             migrationBuilder.DropTable(
                 name: "Sellers");
+
+            migrationBuilder.DropTable(
+                name: "Department");
         }
     }
 }

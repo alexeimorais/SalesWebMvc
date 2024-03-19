@@ -11,8 +11,8 @@ using SalesWebMvc.Data;
 namespace SalesWebMvc.Migrations
 {
     [DbContext(typeof(SalesWebMvcContext))]
-    [Migration("20240309160335_AddDepartmentNulInSellers")]
-    partial class AddDepartmentNulInSellers
+    [Migration("20240319185646_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,7 +74,7 @@ namespace SalesWebMvc.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("Departmentid")
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -87,7 +87,7 @@ namespace SalesWebMvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Departmentid");
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Sellers");
                 });
@@ -107,7 +107,9 @@ namespace SalesWebMvc.Migrations
                 {
                     b.HasOne("SalesWebMvc.Models.Department", "Department")
                         .WithMany("sellers")
-                        .HasForeignKey("Departmentid");
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
                 });

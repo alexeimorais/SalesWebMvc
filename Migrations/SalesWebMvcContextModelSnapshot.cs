@@ -71,7 +71,7 @@ namespace SalesWebMvc.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("Departmentid")
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -84,7 +84,7 @@ namespace SalesWebMvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Departmentid");
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Sellers");
                 });
@@ -104,7 +104,9 @@ namespace SalesWebMvc.Migrations
                 {
                     b.HasOne("SalesWebMvc.Models.Department", "Department")
                         .WithMany("sellers")
-                        .HasForeignKey("Departmentid");
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
                 });
